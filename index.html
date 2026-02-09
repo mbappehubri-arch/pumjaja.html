@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chocolate Day 💝</title>
+
+<style>
+body{
+margin:0;
+height:100vh;
+font-family:'Segoe UI',Arial,sans-serif;
+overflow:hidden;
+
+/* animated rainy gradient */
+background:linear-gradient(120deg,#0f2027,#203a43,#2c5364);
+background-size:400% 400%;
+animation:bgMove 14s ease infinite;
+}
+
+@keyframes bgMove{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+.page{
+display:none;
+height:100%;
+padding:20px;
+box-sizing:border-box;
+}
+
+.page.active{
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+h1{
+font-size:3em;
+font-weight:900;
+letter-spacing:4px;
+color:#ffffff;
+text-shadow:0 0 25px #d2691e,2px 2px 6px black;
+}
+
+p{
+font-size:1.6em;
+background:rgba(0,0,0,.45);
+backdrop-filter:blur(12px);
+padding:25px;
+border-radius:25px;
+text-align:center;
+color:white;
+line-height:1.6;
+min-height:160px;
+}
+
+button{
+margin-top:20px;
+padding:14px 30px;
+border:none;
+border-radius:30px;
+background:linear-gradient(45deg,#8b4513,#d2691e);
+color:white;
+font-size:18px;
+box-shadow:0 0 18px rgba(210,105,30,.8);
+}
+
+/* floating chocolates & hearts */
+.float{
+position:fixed;
+font-size:26px;
+animation:floatUp 6s linear forwards;
+pointer-events:none;
+}
+
+@keyframes floatUp{
+100%{opacity:0;transform:translateY(-260px) scale(1.3);}
+}
+
+/* rain particles */
+.rain{
+position:fixed;
+top:-20px;
+width:2px;
+height:18px;
+background:rgba(255,255,255,.4);
+animation:rainFall linear forwards;
+pointer-events:none;
+}
+
+@keyframes rainFall{
+100%{transform:translateY(110vh);opacity:0;}
+}
+
+/* chocolate drip */
+.drip{
+position:fixed;
+top:-30px;
+font-size:30px;
+animation:dripDown 5s linear forwards;
+pointer-events:none;
+opacity:.9;
+}
+
+@keyframes dripDown{
+100%{transform:translateY(120vh);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="page active" id="p1">
+<h1>POOJA 🍫</h1>
+<p id="t1"></p>
+<button onclick="next()">Next ➡️</button>
+</div>
+
+<div class="page" id="p2"><p id="t2"></p><button onclick="next()">Open Vault 🔓</button></div>
+<div class="page" id="p3"><p id="t3"></p><button onclick="next()">Next ➡️</button></div>
+<div class="page" id="p4"><p id="t4"></p><button onclick="next()">Next ➡️</button></div>
+<div class="page" id="p5"><p id="t5"></p><button onclick="next()">Next ➡️</button></div>
+
+<div class="page" id="p6">
+<p>
+🎁 Chocolate Vault Unlocked! 🍫<br><br>
+This chocolate isn’t physical…<br>
+it’s meant to melt your mood 😌
+</p>
+<button onclick="next()">I’ll take it 😋</button>
+<button onclick="next()">Only if sweet 💝</button>
+</div>
+
+<div class="page" id="p7">
+<p>
+Happy Chocolate Day, Pooja 💝<br><br>
+Stay sweet…  
+stay you…  
+and keep smiling like this 😌🍫
+</p>
+</div>
+
+<script>
+let i=1;
+
+const text=[
+"Today isn’t just Chocolate Day 💝\nIt’s a reminder to tell you\nhow sweet you make my days 😌",
+"I made a small chocolate vault just for you 🍫\n\nNot locked with a password…\nbut with feelings 💖",
+"Chocolate melts with heat…\nbut you melt my overthinking 🥺",
+"This chocolate isn’t just cocoa 😏\nIt has my care,\nmy attention,\nand a little mischief 🍫✨",
+"You don’t have to try so hard.\nYou’re already enough.\n\nJust like chocolate 💝"
+];
+
+function typeText(id,str){
+let j=0,el=document.getElementById(id);
+el.innerHTML="";
+let t=setInterval(()=>{
+el.innerHTML+=str.charAt(j);
+j++;
+if(j>=str.length) clearInterval(t);
+},45);
+}
+
+function next(){
+document.getElementById("p"+i).classList.remove("active");
+i++;
+document.getElementById("p"+i).classList.add("active");
+if(i<=5) typeText("t"+i,text[i-1]);
+}
+
+/* first page */
+typeText("t1",text[0]);
+
+/* floating chocolates & hearts */
+setInterval(()=>{
+let f=document.createElement("div");
+f.className="float";
+f.innerHTML=["🍫","💝","❤️","✨"][Math.floor(Math.random()*4)];
+f.style.left=Math.random()*100+"vw";
+f.style.top=Math.random()*100+"vh";
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),6000);
+},450);
+
+/* rain particles */
+setInterval(()=>{
+let r=document.createElement("div");
+r.className="rain";
+r.style.left=Math.random()*100+"vw";
+r.style.animationDuration=(Math.random()*1+1.5)+"s";
+document.body.appendChild(r);
+setTimeout(()=>r.remove(),2500);
+},120);
+
+/* chocolate drip */
+setInterval(()=>{
+let d=document.createElement("div");
+d.className="drip";
+d.innerHTML="🍫";
+d.style.left=Math.random()*100+"vw";
+document.body.appendChild(d);
+setTimeout(()=>d.remove(),5000);
+},800);
+</script>
+
+</body>
+  </html>
