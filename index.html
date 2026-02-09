@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chocolate Day 💝</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+
 <style>
 body{
-margin:0;
-height:100vh;
-font-family:'Segoe UI',Arial,sans-serif;
+margin:0;height:100vh;
+font-family:'Poppins',sans-serif;
 overflow:hidden;
 background-size:400% 400%;
 animation:bgMove 14s ease infinite;
@@ -22,87 +23,98 @@ transition:background 1s ease;
 100%{background-position:0% 50%}
 }
 
-.page{
-display:none;
-height:100%;
-padding:20px;
-box-sizing:border-box;
-}
-
-.page.active{
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-}
+.page{display:none;height:100%;padding:20px;box-sizing:border-box}
+.page.active{display:flex;flex-direction:column;justify-content:center;align-items:center}
 
 h1{
-font-size:3em;
-font-weight:900;
-letter-spacing:4px;
-color:#ffffff;
-text-shadow:0 0 25px rgba(255,255,255,.6),2px 2px 6px black;
+font-size:3em;font-weight:600;letter-spacing:3px;
+color:#fff;
+text-shadow:0 0 20px rgba(255,255,255,.6),2px 2px 6px black;
+animation:glowPulse 3s ease-in-out infinite;
 }
 
 p{
-font-size:1.6em;
+font-size:1.55em;
 background:rgba(0,0,0,.45);
 backdrop-filter:blur(14px);
-padding:25px;
-border-radius:25px;
-text-align:center;
-color:white;
-line-height:1.6;
+padding:25px;border-radius:25px;
+text-align:center;color:white;line-height:1.6;
 min-height:160px;
+animation:glowPulse 4s ease-in-out infinite;
+}
+
+@keyframes glowPulse{
+0%{text-shadow:0 0 10px rgba(255,255,255,.4)}
+50%{text-shadow:0 0 18px rgba(255,255,255,.8)}
+100%{text-shadow:0 0 10px rgba(255,255,255,.4)}
 }
 
 button{
-margin-top:20px;
-padding:14px 30px;
-border:none;
-border-radius:30px;
+margin-top:18px;
+padding:14px 32px;
+border:none;border-radius:30px;
 background:linear-gradient(45deg,#8b4513,#d2691e);
-color:white;
-font-size:18px;
+color:white;font-size:17px;
 box-shadow:0 0 18px rgba(210,105,30,.8);
 }
 
+/* glass button */
+.glassBtn{
+margin-top:22px;
+padding:12px 26px;
+border-radius:25px;
+background:rgba(255,255,255,.18);
+backdrop-filter:blur(10px);
+color:white;
+font-size:16px;
+border:1px solid rgba(255,255,255,.3);
+transition:transform .2s ease;
+}
+.glassBtn:active{transform:scale(.95)}
+
+/* fading cute line */
+.fadeLine{
+margin-top:18px;
+font-size:1.2em;
+opacity:0;
+animation:fadeIn 3s ease forwards;
+animation-delay:2s;
+}
+@keyframes fadeIn{to{opacity:1}}
+
 /* floating */
-.float{
-position:fixed;
-font-size:26px;
-animation:floatUp 6s linear forwards;
-pointer-events:none;
-}
-@keyframes floatUp{
-100%{opacity:0;transform:translateY(-260px) scale(1.3);}
-}
+.float{position:fixed;font-size:26px;animation:floatUp 6s linear forwards;pointer-events:none}
+@keyframes floatUp{100%{opacity:0;transform:translateY(-260px) scale(1.3)}}
 
 /* rain */
-.rain{
-position:fixed;
-top:-20px;
-width:2px;
-height:18px;
-background:rgba(255,255,255,.4);
-animation:rainFall linear forwards;
-pointer-events:none;
-}
-@keyframes rainFall{
-100%{transform:translateY(110vh);opacity:0;}
+.rain{position:fixed;top:-20px;width:2px;height:18px;background:rgba(255,255,255,.4);animation:rainFall linear forwards;pointer-events:none}
+@keyframes rainFall{100%{transform:translateY(110vh);opacity:0}}
+
+/* drip */
+.drip{position:fixed;top:-30px;font-size:30px;animation:dripDown 5s linear forwards;pointer-events:none;opacity:.9}
+@keyframes dripDown{100%{transform:translateY(120vh);opacity:0}}
+
+/* heartbeat */
+.heartbeat{animation:heartbeat 1.4s ease-in-out infinite}
+@keyframes heartbeat{
+0%{transform:scale(1)}
+20%{transform:scale(1.05)}
+40%{transform:scale(1)}
+60%{transform:scale(1.08)}
+80%{transform:scale(1)}
+100%{transform:scale(1)}
 }
 
-/* chocolate drip */
-.drip{
+/* emoji pop */
+.pop{
 position:fixed;
-top:-30px;
-font-size:30px;
-animation:dripDown 5s linear forwards;
+font-size:28px;
+animation:pop 1.2s ease-out forwards;
 pointer-events:none;
-opacity:.9;
 }
-@keyframes dripDown{
-100%{transform:translateY(120vh);opacity:0;}
+@keyframes pop{
+0%{opacity:1;transform:translate(0,0) scale(.6)}
+100%{opacity:0;transform:translate(var(--x),var(--y)) scale(1.3)}
 }
 </style>
 </head>
@@ -131,26 +143,29 @@ it’s meant to melt your mood 😌
 </div>
 
 <div class="page" id="p7">
-<p>
+<p class="heartbeat">
 Happy Chocolate Day, Pooja 💝<br><br>
-Stay sweet…  
-stay you…  
-and keep smiling like this 😌🍫
+Stay sweet… stay you… 😌🍫
 </p>
+
+<div class="fadeLine">
+* Isi baat pe Dudu pilado 🌝
+</div>
+
+<button class="glassBtn" onclick="popEmoji()">Pretty please 🫶</button>
 </div>
 
 <script>
 let i=1;
 
-/* gradient themes per page */
 const gradients=[
-"linear-gradient(120deg,#0f2027,#203a43,#2c5364)",   // blue blur
-"linear-gradient(120deg,#e0eafc,#cfdef3)",          // white mist
-"linear-gradient(120deg,#3a1c71,#d76d77,#ffaf7b)",  // soft red romance
-"linear-gradient(120deg,#141e30,#243b55)",          // deep night
-"linear-gradient(120deg,#232526,#414345)",          // chocolate dark
-"linear-gradient(120deg,#134e5e,#71b280)",          // teal rain
-"linear-gradient(120deg,#000428,#004e92)"           // calm ending
+"linear-gradient(120deg,#0f2027,#203a43,#2c5364)",
+"linear-gradient(120deg,#e0eafc,#cfdef3)",
+"linear-gradient(120deg,#3a1c71,#d76d77,#ffaf7b)",
+"linear-gradient(120deg,#141e30,#243b55)",
+"linear-gradient(120deg,#232526,#414345)",
+"linear-gradient(120deg,#134e5e,#71b280)",
+"linear-gradient(120deg,#000428,#004e92)"
 ];
 
 const text=[
@@ -162,13 +177,8 @@ const text=[
 ];
 
 function typeText(id,str){
-let j=0,el=document.getElementById(id);
-el.innerHTML="";
-let t=setInterval(()=>{
-el.innerHTML+=str.charAt(j);
-j++;
-if(j>=str.length) clearInterval(t);
-},45);
+let j=0,el=document.getElementById(id);el.innerHTML="";
+let t=setInterval(()=>{el.innerHTML+=str.charAt(j);j++;if(j>=str.length)clearInterval(t)},45);
 }
 
 function next(){
@@ -181,11 +191,23 @@ document.body.style.animation="bgMove 14s ease infinite";
 if(i<=5) typeText("t"+i,text[i-1]);
 }
 
-/* first page */
+function popEmoji(){
+for(let n=0;n<14;n++){
+let e=document.createElement("div");
+e.className="pop";
+e.innerHTML=["🥺","💖","🍫","🫶","🌝"][Math.floor(Math.random()*5)];
+e.style.left="50%";
+e.style.top="70%";
+e.style.setProperty("--x",(Math.random()*300-150)+"px");
+e.style.setProperty("--y",(Math.random()*-300)+"px");
+document.body.appendChild(e);
+setTimeout(()=>e.remove(),1200);
+}
+}
+
 document.body.style.background=gradients[0];
 typeText("t1",text[0]);
 
-/* floating hearts/chocolates */
 setInterval(()=>{
 let f=document.createElement("div");
 f.className="float";
@@ -196,7 +218,6 @@ document.body.appendChild(f);
 setTimeout(()=>f.remove(),6000);
 },450);
 
-/* rain */
 setInterval(()=>{
 let r=document.createElement("div");
 r.className="rain";
@@ -206,7 +227,6 @@ document.body.appendChild(r);
 setTimeout(()=>r.remove(),2500);
 },120);
 
-/* chocolate drip */
 setInterval(()=>{
 let d=document.createElement("div");
 d.className="drip";
