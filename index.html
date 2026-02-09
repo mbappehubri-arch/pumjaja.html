@@ -11,11 +11,9 @@ margin:0;
 height:100vh;
 font-family:'Segoe UI',Arial,sans-serif;
 overflow:hidden;
-
-/* animated rainy gradient */
-background:linear-gradient(120deg,#0f2027,#203a43,#2c5364);
 background-size:400% 400%;
 animation:bgMove 14s ease infinite;
+transition:background 1s ease;
 }
 
 @keyframes bgMove{
@@ -43,13 +41,13 @@ font-size:3em;
 font-weight:900;
 letter-spacing:4px;
 color:#ffffff;
-text-shadow:0 0 25px #d2691e,2px 2px 6px black;
+text-shadow:0 0 25px rgba(255,255,255,.6),2px 2px 6px black;
 }
 
 p{
 font-size:1.6em;
 background:rgba(0,0,0,.45);
-backdrop-filter:blur(12px);
+backdrop-filter:blur(14px);
 padding:25px;
 border-radius:25px;
 text-align:center;
@@ -69,19 +67,18 @@ font-size:18px;
 box-shadow:0 0 18px rgba(210,105,30,.8);
 }
 
-/* floating chocolates & hearts */
+/* floating */
 .float{
 position:fixed;
 font-size:26px;
 animation:floatUp 6s linear forwards;
 pointer-events:none;
 }
-
 @keyframes floatUp{
 100%{opacity:0;transform:translateY(-260px) scale(1.3);}
 }
 
-/* rain particles */
+/* rain */
 .rain{
 position:fixed;
 top:-20px;
@@ -91,7 +88,6 @@ background:rgba(255,255,255,.4);
 animation:rainFall linear forwards;
 pointer-events:none;
 }
-
 @keyframes rainFall{
 100%{transform:translateY(110vh);opacity:0;}
 }
@@ -105,7 +101,6 @@ animation:dripDown 5s linear forwards;
 pointer-events:none;
 opacity:.9;
 }
-
 @keyframes dripDown{
 100%{transform:translateY(120vh);opacity:0;}
 }
@@ -131,8 +126,8 @@ opacity:.9;
 This chocolate isn’t physical…<br>
 it’s meant to melt your mood 😌
 </p>
-<button onclick="next()">I’ll take it 😋</button>
-<button onclick="next()">Only if sweet 💝</button>
+<button onclick="next()">Sweet 💝</button>
+<button onclick="next()">Extra sweet 🍫</button>
 </div>
 
 <div class="page" id="p7">
@@ -146,6 +141,17 @@ and keep smiling like this 😌🍫
 
 <script>
 let i=1;
+
+/* gradient themes per page */
+const gradients=[
+"linear-gradient(120deg,#0f2027,#203a43,#2c5364)",   // blue blur
+"linear-gradient(120deg,#e0eafc,#cfdef3)",          // white mist
+"linear-gradient(120deg,#3a1c71,#d76d77,#ffaf7b)",  // soft red romance
+"linear-gradient(120deg,#141e30,#243b55)",          // deep night
+"linear-gradient(120deg,#232526,#414345)",          // chocolate dark
+"linear-gradient(120deg,#134e5e,#71b280)",          // teal rain
+"linear-gradient(120deg,#000428,#004e92)"           // calm ending
+];
 
 const text=[
 "Today isn’t just Chocolate Day 💝\nIt’s a reminder to tell you\nhow sweet you make my days 😌",
@@ -169,13 +175,17 @@ function next(){
 document.getElementById("p"+i).classList.remove("active");
 i++;
 document.getElementById("p"+i).classList.add("active");
+document.body.style.background=gradients[i-1];
+document.body.style.backgroundSize="400% 400%";
+document.body.style.animation="bgMove 14s ease infinite";
 if(i<=5) typeText("t"+i,text[i-1]);
 }
 
 /* first page */
+document.body.style.background=gradients[0];
 typeText("t1",text[0]);
 
-/* floating chocolates & hearts */
+/* floating hearts/chocolates */
 setInterval(()=>{
 let f=document.createElement("div");
 f.className="float";
@@ -186,7 +196,7 @@ document.body.appendChild(f);
 setTimeout(()=>f.remove(),6000);
 },450);
 
-/* rain particles */
+/* rain */
 setInterval(()=>{
 let r=document.createElement("div");
 r.className="rain";
@@ -208,4 +218,4 @@ setTimeout(()=>d.remove(),5000);
 </script>
 
 </body>
-  </html>
+</html>
