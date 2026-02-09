@@ -72,10 +72,12 @@ transition:transform .2s ease;
 }
 .glassBtn:active{transform:scale(.95)}
 
-/* fading cute line */
+/* fading cute line (FIXED COLOR) */
 .fadeLine{
 margin-top:18px;
 font-size:1.2em;
+color:white;
+text-shadow:0 0 8px rgba(255,255,255,.7);
 opacity:0;
 animation:fadeIn 3s ease forwards;
 animation-delay:2s;
@@ -152,11 +154,12 @@ Stay sweet… stay you… 😌🍫
 * Isi baat pe Dudu pilado 🌝
 </div>
 
-<button class="glassBtn" onclick="popEmoji()">Pretty please 🫶</button>
+<button class="glassBtn" id="duduBtn" onclick="popEmoji()">Pretty please 🫶</button>
 </div>
 
 <script>
 let i=1;
+let clicked=false;
 
 const gradients=[
 "linear-gradient(120deg,#0f2027,#203a43,#2c5364)",
@@ -192,6 +195,11 @@ if(i<=5) typeText("t"+i,text[i-1]);
 }
 
 function popEmoji(){
+let btn=document.getElementById("duduBtn");
+if(!clicked){
+btn.innerText="Okay okay… noted 😌🍫";
+clicked=true;
+}
 for(let n=0;n<14;n++){
 let e=document.createElement("div");
 e.className="pop";
